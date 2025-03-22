@@ -1,0 +1,36 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}Modifier Sortie{% endblock %}
+
+{% block content %}
+<body style="background-color: lightslategray;"  class="page-modifier-sortie">
+    <h1 style="text-align: justify; ">Modifier une Sortie</h1>
+  <div style="background-color: lightslategray;">
+    <form style="width: max-content; " method="post"  >
+        {% csrf_token %}
+        <!-- Champ pour modifier le prix -->
+        <div  class="form-control">
+            <label>Prix</label>
+            <input type="number" name="prixems" class="form-control" placeholder="Modifier le prix" value="{{ sortie2.prix }}">
+        </div>
+
+        <!-- Champ pour indiquer qui prend -->
+        <div class="form-control">
+            <label>Qui prend</label>
+            <input type="text" name="quiprends" class="form-control" placeholder="Modifier le travailleur" value="{{ sortie2.quiprend }}">
+        </div>
+
+        <!-- Champ pour modifier la description -->
+        <div class="form-control">
+            <label>Description</label>
+            <textarea id="description" name="descriptionenss" class="form-control" placeholder="Modifier la description" rows="4" required>{{ sortie2.descriptionsortie }}</textarea>
+        </div>
+
+        <!-- Bouton pour enregistrer les modifications -->
+        <button type="submit" class="btn btn-primary mt-3">Enregistrer les modifications</button>
+    </form>
+</div>
+</body>
+{% endblock %}

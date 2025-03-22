@@ -1,0 +1,340 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}JawdaPhone - Administration{% endblock %}</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Ajouter dans la section style existante */
+.user-info {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.btn-logout {
+    background-color: rgba(220, 38, 38, 0.9) !important;
+    border: none;
+}
+
+.btn-logout:hover {
+    background-color: rgb(185, 28, 28) !important;
+}
+
+.user-info i {
+    font-size: 1.2rem;
+}
+        :root {
+            --primary-color: #4F46E5;          /* Indigo */
+            --secondary-color: #4338CA;        /* Indigo foncé */
+            --accent-color: #6366F1;          /* Indigo clair */
+            --success-color: #059669;         /* Vert */
+            --warning-color: #D97706;         /* Orange */
+            --danger-color: #DC2626;          /* Rouge */
+            --light-bg: #F3F4F6;             /* Fond clair */
+            --menu-bg: #FFFFFF;              /* Fond menu */
+            --text-primary: #111827;         /* Texte principal */
+            --text-secondary: #4B5563;       /* Texte secondaire */
+            --border-color: #E5E7EB;         /* Bordures */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header-main {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 280px;
+            z-index: 1030;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn {
+            background-color: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        /* Sidebar Styles */
+        .navbar-vertical {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--menu-bg);
+            padding: 2rem 1rem;
+            overflow-y: auto;
+            z-index: 1040;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .sidebar-title {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        /* Menu Section Styles */
+        .menu-section {
+            background: var(--menu-bg);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+        }
+
+        .menu-title {
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(79,70,229,0.1);
+        }
+
+        /* Menu Item Styles */
+        .menu-item {
+            display: flex;
+            align-items: center;
+            color: var(--text-primary);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin: 0.4rem 0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, rgba(79,70,229,0.05), rgba(99,102,241,0.05));
+            border: 1px solid rgba(79,70,229,0.1);
+        }
+
+        .menu-item:hover {
+            background: linear-gradient(45deg, rgba(79,70,229,0.1), rgba(99,102,241,0.1));
+            color: var(--primary-color);
+            transform: translateX(5px);
+            border-color: var(--primary-color);
+        }
+
+        .menu-item.active {
+            background: linear-gradient(45deg, rgba(79,70,229,0.15), rgba(99,102,241,0.15));
+            color: var(--primary-color);
+            font-weight: 600;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .menu-item i {
+            color: var(--primary-color);
+            width: 24px;
+            margin-right: 12px;
+            font-size: 1.1rem;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            margin-left: 280px;
+            padding: 5rem 2rem 2rem;
+            min-height: 100vh;
+        }
+
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .navbar-vertical {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .navbar-vertical.show {
+                transform: translateX(0);
+            }
+
+            .header-main {
+                left: 0;
+            }
+
+            .content-wrapper {
+                margin-left: 0;
+            }
+        }
+
+        /* Custom Scrollbar */
+        .navbar-vertical::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .navbar-vertical::-webkit-scrollbar-track {
+            background: var(--light-bg);
+        }
+
+        .navbar-vertical::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary-color), var(--accent-color));
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<!-- Rest of your existing HTML code remains the same -->
+<body>
+    <!-- En-tête -->
+    <header class="header-main">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <button id="toggleNavbar" class="btn nav-btn me-2 d-lg-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="{% url 'acceul' %}" class="btn nav-btn me-2">
+                    <i class="fas fa-home me-1"></i> Accueil
+                </a>
+                <a href="{% url 'notificatio' %}" class="btn nav-btn">
+                    <i class="fas fa-bell me-1"></i> Notifications
+                </a>
+            </div>
+            <div class="d-flex align-items-center">
+                {% if request.session.user_id %}
+                <span class="user-info me-3">
+                    <i class="fas fa-user-circle"></i>
+                    {{ request.session.username }}
+                </span>
+                <a href="{% url 'logout' %}" class="btn nav-btn btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Déconnexion
+                </a>
+                {% else %}
+                <a href="{% url 'admin_app0' %}" class="btn nav-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Se connecter
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- Barre latérale -->
+    <nav id="navbar" class="navbar-vertical">
+        <div class="sidebar-header">
+            <h1 class="sidebar-title">JawdaPhone</h1>
+        </div>
+
+        <!-- Gestion des Produits -->
+        <div class="menu-section">
+            <h6 class="menu-title">📱 Gestion des Produits</h6>
+            <a href="{% url 'ajouterbou' %}" class="menu-item {% if request.resolver_match.url_name == 'ajouterbou' %}active{% endif %}">
+                <i class="fas fa-plus-circle"></i> Ajouter un Produit
+            </a>
+            <a href="{% url 'listbou' %}" class="menu-item {% if request.resolver_match.url_name == 'listbou' %}active{% endif %}">
+                <i class="fas fa-mobile-alt"></i> Liste des Téléphones
+            </a>
+        </div>
+
+        <!-- Gestion des Ventes -->
+        <div class="menu-section">
+            <h6 class="menu-title">💰 Gestion des Ventes</h6>
+            <a href="{% url 'listvte' %}" class="menu-item {% if request.resolver_match.url_name == 'listvte' %}active{% endif %}">
+                <i class="fas fa-shopping-cart"></i> Ventes Téléphones
+            </a>
+            <a href="{% url 'ventechar' %}" class="menu-item {% if request.resolver_match.url_name == 'ventechar' %}active{% endif %}">
+                <i class="fas fa-plug"></i> Ventes Chargeurs
+            </a>
+            <a href="{% url 'lstecouts' %}" class="menu-item {% if request.resolver_match.url_name == 'lstecouts' %}active{% endif %}">
+                <i class="fas fa-headphones"></i> Ventes Écouteurs
+            </a>
+        </div>
+
+        <!-- Accessoires -->
+        <div class="menu-section">
+            <h6 class="menu-title">🔌 Accessoires</h6>
+            <a href="{% url 'lstcharg' %}" class="menu-item {% if request.resolver_match.url_name == 'lstcharg' %}active{% endif %}">
+                <i class="fas fa-battery-full"></i> Liste des Chargeurs
+            </a>
+            <a href="{% url 'lstecout' %}" class="menu-item {% if request.resolver_match.url_name == 'lstecout' %}active{% endif %}">
+                <i class="fas fa-headphones-alt"></i> Liste des Écouteurs
+            </a>
+        </div>
+
+        <!-- Gestion Clients -->
+        <div class="menu-section">
+            <h6 class="menu-title">👥 Gestion Clients</h6>
+            <a href="{% url 'listCl' %}" class="menu-item {% if request.resolver_match.url_name == 'listCl' %}active{% endif %}">
+                <i class="fas fa-users"></i> Liste des Clients
+            </a>
+        </div>
+
+       
+    </nav>
+
+    <!-- Zone de contenu -->
+    <div class="content-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const toggleNavbar = document.getElementById('toggleNavbar');
+        const navbar = document.getElementById('navbar');
+
+        // Gestion du menu mobile
+        toggleNavbar.addEventListener('click', () => {
+            navbar.classList.toggle('show');
+        });
+
+        // Fermeture du menu au clic en dehors sur mobile
+        document.addEventListener('click', function(event) {
+            if (!navbar.contains(event.target) && !toggleNavbar.contains(event.target)) {
+                if (window.innerWidth < 992) {
+                    navbar.classList.remove('show');
+                }
+            }
+        });
+
+        // Gestion du redimensionnement
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 992) {
+                navbar.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!-- Remplacer la div de connexion existante par celle-ci dans le header -->

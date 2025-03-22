@@ -1,0 +1,8 @@
+{% extends "affichage/base.html" %}
+
+{% block content %}
+    <h2>Merci pour votre achat !</h2>
+    <p>Vous avez acheté : <strong>{{ produit.nomproduit }}</strong></p>
+    <p>Prix total : {{ produit.prixtot }}€</p>
+    <p>Quantité restante : {{ produit.quantite }}</p>
+{% endblock %}

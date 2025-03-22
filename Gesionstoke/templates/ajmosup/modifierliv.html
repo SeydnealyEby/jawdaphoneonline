@@ -1,0 +1,97 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}Modifier Livreur{% endblock %}
+
+{% block content %}
+<body class="page-modifier-livreur">
+    <div class="container mt-4">
+        <h1 class="text-center text-primary mb-4"><i class="fas fa-user-edit"></i> Modifier un Livreur</h1>
+
+        <div class="card shadow">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Champ pour modifier le nom du livreur -->
+                    <div class="form-group mb-3">
+                        <label><i class="fas fa-user"></i> Nom de Livreur</label>
+                        <input type="text" name="nlv" class="form-control" placeholder="Modifier le nom du livreur" value="{{ liv.namesf }}" required>
+                    </div>
+
+                    <!-- Champ pour modifier la date de commencement -->
+                    <div class="form-group mb-3">
+                        <label><i class="fas fa-calendar-day"></i> Date de commencement</label>
+                        <input type="datetime-local" name="datecoommence" class="form-control" value="{{ liv.datecommence|date:'Y-m-d\\TH:i' }}" required>
+                    </div>
+
+                    <!-- Champ pour modifier le saleur -->
+                    <div class="form-group mb-3">
+                        <label><i class="fas fa-dollar-sign"></i> Saleur</label>
+                        <input type="number" name="saleur" class="form-control" placeholder="Modifier le saleur" value="{{ liv.saleur }}" required>
+                    </div>
+
+                    <!-- Champ pour modifier le matricule -->
+                    <div class="form-group mb-3">
+                        <label><i class="fas fa-id-card"></i> Matricule</label>
+                        <input type="text" name="mat" class="form-control" placeholder="Modifier le matricule" value="{{ liv.mariculv }}" required>
+                    </div>
+
+                    <!-- Champ pour modifier le numéro de téléphone -->
+                    <div class="form-group mb-3">
+                        <label><i class="fas fa-phone"></i> Téléphone</label>
+                        <input type="number" name="numt" class="form-control" placeholder="Modifier le numéro de téléphone" value="{{ liv.numv }}" required>
+                    </div>
+
+                    <!-- Bouton pour enregistrer les modifications -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i> Enregistrer les modifications
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .page-modifier-livreur {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        
+        .fas {
+            margin-right: 10px;
+        }
+    </style>
+</body>
+{% endblock %}

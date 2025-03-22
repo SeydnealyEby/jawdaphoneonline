@@ -1,0 +1,146 @@
+{% extends "affichage/base.html" %}
+
+
+
+{% block content %}
+<style>
+    .payment-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .payment-container h2 {
+        color: #007bff;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+    .form-label {
+        font-weight: bold;
+        color: #333;
+    }
+    .form-control {
+        border-radius: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        transition: border-color 0.3s ease;
+    }
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    .form-select {
+        border-radius: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        transition: border-color 0.3s ease;
+    }
+    .form-select:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .text-danger {
+        color: #dc3545;
+    }
+    .text-muted {
+        color: #6c757d;
+    }
+    .error-message {
+        display: none;
+        color: #dc3545;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="payment-container mt-5">
+    <h2>Choisissez votre mode de paiement</h2>
+
+  
+        <form method="POST" onsubmit="return validerFormulaire()">
+            {% csrf_token %}
+            
+           
+            <input type="hidden" name="produit_id" value="{{ produit.produit_id }}">
+            
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="nom" class="form-label">Nom :</label>
+                    <input type="text" class="form-control" id="nom" name="nom" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="prenom" class="form-label">Prénom :</label>
+                    <input type="text" class="form-control" id="prenom" name="prenom" required>
+                </div>
+            </div>
+
+         
+            <div class="mb-3">
+                <label for="mode_paiement" class="form-label">Méthode de paiement :</label>
+                <select class="form-select" id="mode_paiement" name="mode_paiement" required>
+                    <option value="" selected disabled>-- Sélectionnez une banque --</option>
+                    <option value="bankily">Bankily</option>
+                    <option value="masrivi">Masrivi</option>
+                    <option value="sedad">Sedad</option>
+                    <option value="amanty">Amanty BEA</option>
+                    <option value="barid">Barid Cash</option>
+                    <option value="bci">BCI PAY</option>
+                    <option value="click">CLICK</option>
+                    <option value="moov">MOOV MONEY</option>
+                    <option value="bamis">BAMIS</option>
+                    <option value="bim">BIM</option>
+                </select>
+                <small id="error-message" class="error-message">Veuillez choisir un mode de paiement.</small>
+            </div>
+
+           
+            <div class="mb-3">
+                <label for="montant" class="form-label">Montant à payer :</label>
+                <input type="number" class="form-control" id="montant" name="montant" min="1" required>
+            </div>
+
+            <!-- Numéro de téléphone -->
+            <div class="mb-3">
+                <label for="telephone" class="form-label">Numéro de téléphone :</label>
+                <input type="text" class="form-control" id="telephone" name="telephone" 
+                    pattern="^(?:\+222|00222)[2-4][0-9]{7}$" 
+                    placeholder="Ex: +2222XXXXXXX ou 002223XXXXXXX" required>
+                <small class="text-muted">Format : +2222XXXXXXX ou 002223XXXXXXX (doit commencer par 2, 3 ou 4)</small>
+            </div>
+
+            <!-- Bouton de validation -->
+            <div class="text-center">
+                <a href="{% url 'confirmation1' charid.id %}" class="btn btn-primary">valider paiment </a>
+
+            </div>
+        </form>
+
+</div>
+
+<script>
+    function validerFormulaire() {
+        let modePaiement = document.getElementById("mode_paiement").value;
+        let errorMessage = document.getElementById("error-message");
+
+        if (!modePaiement) {
+            errorMessage.style.display = "block";
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}Ajouter Boubou{% endblock %}
+{% block content %}
+<body class="page-liste-boubous">
+    <div class="container">
+        <h1>Liste des travailleur</h1>
+        {%comment%}
+        <nav class="navigation">
+            <a href="{% url 'ajouterbou' %}" class="btn">Ajouter un boubou</a>
+            <a href="{% url 'listentreeA' %}" class="btn">Liste d'entrée</a>
+            <a href="{% url 'AjouterC' %}" class="btn">Ajouter un client</a>
+        </nav>
+        {%endcomment%}
+       
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom de travailleur</th>
+                    <th>comencer</th>
+                    <th>saleur</th>
+                    
+                    <th>prendre</th>
+                    <th>Rest</th>
+                    <th>Modification</th>
+                    <th>Suppression</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trav in travailleurs %}
+                <tr>
+                    <td>{{ trav.id }}</td>
+                    <td>{{ trav.namesf }}</td>
+                    <td>{{ trav.datecommence }}</td>
+                    <td>{{ trav.saleur }}</td>
+                   
+                    <td>{{ trav.prendre }}</td>
+                    <td>{{ trav.rset }}</td>
+                    <td>
+                        <a href="{% url 'modtrav' trav.id %}" class="btn btn-edit">Modifier</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'supptrav' trav.id %}" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce boubou ?')">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+{% endblock %}

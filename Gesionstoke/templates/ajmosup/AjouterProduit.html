@@ -1,0 +1,278 @@
+{% extends 'ajmosup/base.html' %}
+{% load static %}
+
+{% block title %}Ajouter un Produit{% endblock %}
+
+{% block content %}
+<div class="add-product-page">
+    <!-- Card Container -->
+    <div class="product-card">
+        <!-- Header Section -->
+        <div class="card-header">
+            <h2>
+                <i class="fas fa-plus-circle"></i> 
+                Ajouter un Nouveau Produit
+            </h2>
+            <p class="subtitle">Remplissez les informations du produit</p>
+        </div>
+
+        <!-- Form Section -->
+        <form method="post" enctype="multipart/form-data" class="product-form">
+            {% csrf_token %}
+            
+            <!-- Form Grid -->
+            <div class="form-grid">
+                <!-- Left Column -->
+                <div class="form-column">
+                    <!-- Product Type -->
+                    <div class="form-group">
+                        <label for="nomprod">
+                            <i class="fas fa-box"></i> Type de Produit
+                        </label>
+                        <select class="form-control" id="nomprod" name="nomprod" required>
+                            <option value="" selected disabled>-- Sélectionnez le produit --</option>
+                            <option value="téléphone">Téléphone</option>
+                            <option value="chargeur">Chargeur</option>
+                            <option value="ecouteur">Écouteur</option>
+                        </select>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group">
+                        <label for="tussi">
+                            <i class="fas fa-tag"></i> Catégorie
+                        </label>
+                        <input class="form-control" type="text" id="tussi" name="tussi" 
+                               placeholder="Entrez la catégorie" required>
+                    </div>
+
+                    <!-- Purchase Price -->
+                    <div class="form-group">
+                        <label for="prixachat">
+                            <i class="fas fa-shopping-cart"></i> Prix d'achat (MRU)
+                        </label>
+                        <input class="form-control" type="number" id="prixachat" name="prixachat" 
+                               placeholder="Prix d'achat" required>
+                    </div>
+
+                    <!-- Selling Price -->
+                    <div class="form-group">
+                        <label for="prixvente">
+                            <i class="fas fa-tag"></i> Prix de vente (MRU)
+                        </label>
+                        <input class="form-control" type="number" id="prixvente" name="prixvente" 
+                               placeholder="Prix de vente" required>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="form-column">
+                    <!-- Quantity -->
+                    <div class="form-group">
+                        <label for="quantie">
+                            <i class="fas fa-boxes"></i> Quantité
+                        </label>
+                        <input class="form-control" type="number" id="quantie" name="quantie" 
+                               placeholder="Quantité disponible" required>
+                    </div>
+
+                    <!-- Profit -->
+                    <div class="form-group">
+                        <label for="benefice">
+                            <i class="fas fa-chart-line"></i> Bénéfice (MRU)
+                        </label>
+                        <input class="form-control" type="number" id="benefice" name="benefice" 
+                               placeholder="Calculé automatiquement" readonly>
+                    </div>
+
+                    <!-- Product Image -->
+                    <div class="form-group">
+                        <label for="img">
+                            <i class="fas fa-image"></i> Image du produit
+                        </label>
+                        <div class="file-upload">
+                            <input type="file" id="img" name="imagep" class="form-control">
+                            <label for="img" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Choisir une image</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description Section -->
+            <div class="form-group mt-4">
+                <label for="description">
+                    <i class="fas fa-align-left"></i> Description
+                </label>
+                <textarea class="form-control" id="description" name="description" 
+                          placeholder="Ajoutez une description détaillée du produit" rows="4"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-button">
+                <i class="fas fa-plus-circle"></i> Ajouter le produit
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .add-product-page {
+        padding: 2rem;
+        background-color: #f8f9fa;
+        min-height: calc(100vh - 4rem);
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        padding: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .card-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .card-header h2 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        color: #2c3e50;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-group label i {
+        color: #3498db;
+        margin-right: 0.5rem;
+        width: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+        outline: none;
+    }
+
+    .file-upload {
+        position: relative;
+    }
+
+    .file-upload input[type="file"] {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .file-label {
+        display: block;
+        padding: 0.75rem;
+        background: #f8f9fa;
+        border: 2px dashed #e0e0e0;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .file-label:hover {
+        border-color: #3498db;
+        background: #f1f9ff;
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .submit-button {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        border: none;
+        border-radius: 8px;
+        color: white;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+    }
+
+    .submit-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .add-product-page {
+            padding: 1rem;
+        }
+    }
+</style>
+
+<script>
+    // Calcul automatique du bénéfice
+    const prixAchat = document.getElementById('prixachat');
+    const prixVente = document.getElementById('prixvente');
+    const quantite = document.getElementById('quantie');
+    const benefice = document.getElementById('benefice');
+
+    function calculerBenefice() {
+        const achat = parseFloat(prixAchat.value) || 0;
+        const vente = parseFloat(prixVente.value) || 0;
+        const qty = parseInt(quantite.value) || 0;
+        const resultat = (vente - achat) * qty;
+        benefice.value = resultat >= 0 ? resultat : 0;
+    }
+
+    prixAchat.addEventListener('input', calculerBenefice);
+    prixVente.addEventListener('input', calculerBenefice);
+    quantite.addEventListener('input', calculerBenefice);
+
+    // Gestion du fichier uploadé
+    const fileInput = document.getElementById('img');
+    const fileLabel = document.querySelector('.file-label span');
+    
+    fileInput.addEventListener('change', function() {
+        fileLabel.textContent = this.files[0] ? this.files[0].name : 'Choisir une image';
+    });
+</script>
+{% endblock %}

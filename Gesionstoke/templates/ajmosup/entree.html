@@ -1,0 +1,44 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+<body class="ajouter-commande">
+    <div >
+        <h1>Ajouter une Entrée</h1>
+        <form method="post" class="formajout">
+            {% csrf_token %}
+            <div class="form-left">
+            <div class="form-control">
+                <label for="Produit">Produit</label>
+                <input type="text" id="Produit" name="produits" placeholder="Ajoutez un produit" required>
+            </div>
+            <div class="form-control">
+                <label for="Type">Type</label>
+                <input type="text" id="Type" name="type1" placeholder="Ajoutez un type" required>
+            </div>
+            <div class="form-control">
+                <label for="prixen">Prix</label>
+                <input type="number" id="prixen" name="prixen" placeholder="Ajoutez le prix" required>
+            </div>
+         
+            
+            <div class="form-control">
+                <label for="travalleuren">Travailleur</label>
+                <input type="text" id="travalleuren" name="travalleuren" placeholder="Ajoutez le travailleur" required>
+            </div>
+        </div>
+        <div class="form-right">
+            <div class="form-control">
+                <label for="descriptionen">Description</label>
+                <textarea id="descriptionen" name="descriptionen" placeholder="Ajoutez la description" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Ajouter</button>
+        </div>
+        </form>
+    </div>
+    
+</body>
+{% endblock %}

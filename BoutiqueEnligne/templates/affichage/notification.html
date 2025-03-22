@@ -1,0 +1,101 @@
+<!-- filepath: c:\Users\seydn\Documents\Dango\mydangoapp\BoutiqueTel\Boutiquetelephone\BoutiqueEnligne\templates\affichage\notification.html -->
+{% extends 'ajmosup/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">📢 Notifications d'Achat</h2>
+
+    <!-- Champ de recherche par numéro de téléphone -->
+    <div class="mb-4">
+        <input type="text" id="searchInput" class="form-control" placeholder="Filtrer par numéro de téléphone" onkeyup="filterNotifications()">
+    </div>
+
+    <div class="row" id="notificationContainer">
+        {% for achat in notification %}
+        <div class="col-md-4 mb-4 notification-item">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title"><span class="badge bg-success">🛒 Nouveau Achat</span></h5>
+                    <p class="card-text"><strong>{{ achat.nom }}</strong> a acheté :</p>
+                    <p class="card-text"><i class="fas fa-box"></i> <strong>Produit :</strong> {{ achat.produit }}</p>
+                    <p class="card-text"><i class="fas fa-money-bill"></i> <strong>Montant :</strong> {{ achat.montantpayer }} URM</p>
+                    <p class="card-text"><i class="fas fa-credit-card"></i> <strong>Mode de paiement :</strong> {{ achat.modpayement }}</p>
+                    <p class="card-text"><i class="fas fa-phone"></i> <strong>Téléphone :</strong> {{ achat.telephone }}</p>
+                    <p class="card-text"><i class="fas fa-envelope"></i> <strong>Email :</strong> {{ achat.email }}</p>
+                    <p class="card-text"><i class="fas fa-image"></i> <strong>Image :</strong></p>
+                    {% if achat.image %}
+                    <img src="{{ achat.image.url }}" alt="Image du produit" class="img-fluid mb-3">
+                    {% else %}
+                    <p class="card-text">Aucune image disponible</p>
+                    {% endif %}
+                    <p class="card-text mt-auto"><i class="fas fa-calendar-alt"></i> <strong>Date d'achat :</strong> {{ achat.date_achat }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function filterNotifications() {
+    var input, filter, container, items, item, i, txtValue;
+    input = document.getElementById('searchInput');
+    filter = input.value.toUpperCase();
+    container = document.getElementById('notificationContainer');
+    items = container.getElementsByClassName('notification-item');
+
+    for (i = 0; i < items.length; i++) {
+        item = items[i];
+        txtValue = item.textContent || item.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            item.style.display = "";
+        } else {
+            item.style.display = "none";
+        }
+    }
+}
+</script>
+
+<style>
+    .card {
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .badge {
+        font-size: 0.9rem;
+    }
+
+    .img-fluid {
+        border-radius: 10px;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,195 @@
+{% extends 'affichage/base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section mb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 text-primary fw-bold mb-3">À Propos de JawdaPhone</h1>
+                <p class="lead text-muted">Votre destination de confiance pour une technologie mobile de qualité</p>
+                <div class="divider-custom">
+                    <div class="divider-line"></div>
+                    <div class="divider-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="divider-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notre Histoire Section -->
+<div class="container mb-6">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="h1 mb-4 text-center">Notre Histoire</h2>
+            <p class="lead mb-4 text-center">Depuis 2018, JawdaPhone s'est imposé comme le leader de la vente de smartphones et d'accessoires de qualité en Mauritanie.</p>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-mobile-alt text-primary"></i>
+                    <h4>Smartphones Premium</h4>
+                    <p>Les derniers modèles des meilleures marques</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-headphones text-success"></i>
+                    <h4>Accessoires Audio</h4>
+                    <p>Une qualité sonore exceptionnelle</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-battery-full text-warning"></i>
+                    <h4>Chargeurs Certifiés</h4>
+                    <p>Des accessoires fiables et sécurisés</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt text-info"></i>
+                    <h4>Protection Garantie</h4>
+                    <p>Service après-vente de qualité</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Nos Valeurs Section -->
+<div class="values-section py-6">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="h1 mb-3">Nos Valeurs</h2>
+                <p class="lead text-muted">Ce qui nous définit et guide nos actions au quotidien</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="value-card">
+                    <div class="icon-wrapper bg-primary">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Excellence</h3>
+                    <p>Nous nous engageons à fournir uniquement des produits de la plus haute qualité.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <div class="icon-wrapper bg-success">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Confiance</h3>
+                    <p>La satisfaction de nos clients est notre priorité absolue.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <div class="icon-wrapper bg-warning">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>Nous évoluons constamment pour vous offrir le meilleur de la technologie.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Hero Section */
+.hero-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.divider-custom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.divider-line {
+    width: 100px;
+    height: 2px;
+    background-color: #007bff;
+    margin: 0 1rem;
+}
+
+.divider-icon {
+    color: #007bff;
+    font-size: 1.5rem;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature-item {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+}
+
+.feature-item i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-item p {
+    color: #6c757d;
+    margin-top: 0.5rem;
+}
+
+/* Values Section */
+.values-section {
+    background-color: #f8f9fa;
+}
+
+.value-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+}
+
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.icon-wrapper i {
+    font-size: 2rem;
+    color: white;
+}
+
+/* Utility Classes */
+.mb-6 {
+    margin-bottom: 4rem;
+}
+
+.py-6 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+</style>
+{% endblock %}

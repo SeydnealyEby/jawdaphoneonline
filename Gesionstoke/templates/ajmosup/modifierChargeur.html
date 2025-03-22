@@ -1,0 +1,64 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}Modifier le produit{% endblock %}
+
+{% block content %}
+<head>
+    <!-- FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body class="page-ajouter-commande">
+    <h1><i class="fa fa-edit"></i> Modifier un produit</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-left">
+            <div class="form-group">
+                <label for="prod"><i class="fa fa-tag"></i> Nom du produit</label>
+                <input id="prod" type="text" name="modprod" class="form-control" placeholder="Modifier le produit" value="{{ charheur.nomproduit }}">
+            </div>
+            <div class="form-group">
+                <label for="tussi"><i class="fa fa-list"></i> Type du produit</label>
+                <input id="tussi" type="text" name="type" class="form-control" placeholder="Modifier le type" value="{{ charheur.type }}">
+            </div>
+            <div class="form-group">
+                <label for="prixach"><i class="fa fa-dollar-sign"></i> Prix d'achat</label>
+                <input id="prixach" type="number" name="prixac" class="form-control" placeholder="Modifier le prix" value="{{ charheur.prixinit }}">
+            </div>
+            <div class="form-group">
+                <label for="prixv"><i class="fa fa-dollar-sign"></i> Prix de vente</label>
+                <input id="prixv" type="number" name="prixv" class="form-control" placeholder="Modifier le prix" value="{{ charheur.prixtot }}">
+            </div>
+            <div class="form-group">
+                <label for="qte"><i class="fa fa-box"></i> Quantité</label>
+                <input id="qte" type="number" name="quantite" class="form-control" placeholder="Modifier la quantité" value="{{ charheur.quantite }}">
+            </div>
+        </div>
+        <div class="form-right">
+            <div class="form-group">
+                <label for="benefice"><i class="fa fa-chart-line"></i> Bénéfice</label>
+                <input id="benefice" type="number" name="benefice" class="form-control" placeholder="Modifier le bénéfice" value="{{ charheur.benefice }}">
+            </div>
+            <div class="form-group">
+                <label><i class="fa fa-image"></i> Image actuelle</label><br>
+                {% if charheur.image %}
+                    <img src="{{ charheur.image.url }}" alt="Image actuelle" width="150">
+                {% else %}
+                    <p>Aucune image</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="image"><i class="fa fa-upload"></i> Changer l'image</label>
+                <input id="image" type="file" name="image" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="description"><i class="fa fa-file-alt"></i> Description</label>
+                <textarea id="description" name="description" class="form-control" placeholder="Modifier la description">{{ charheur.description }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Enregistrer les modifications</button>
+        </div>
+    </form>
+</body>
+{% endblock %}

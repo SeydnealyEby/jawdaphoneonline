@@ -1,0 +1,214 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}Liste des chargeurs{% endblock %}
+
+{% block content %}
+<head>
+    <!-- FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #007bff;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+
+        .search-btn {
+            margin-left: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .search-btn i {
+            color: white;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-edit:hover, .btn-delete:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .btn-edit i, .btn-delete i {
+            margin-right: 5px;
+        }
+
+        .img-thumbnail {
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .img-thumbnail:hover {
+            transform: scale(1.1);
+        }
+
+        .no-image {
+            color: #6c757d;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body class="page-liste-boubous">
+    <div class="container">
+        <h1><i class="fa fa-battery-full"></i> Liste des chargeurs</h1>
+
+        <!-- Barre de recherche -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" class="search-input" placeholder="Rechercher un produit...">
+            <button class="search-btn"><i class="fa fa-search"></i></button>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Produit</th>
+                    <th>Type</th>
+                    <th>Quantité</th>
+                    <th>Prix d'achat</th>
+                    <th>Prix de vente</th>
+                    <th>Bénéfice</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Modification</th>
+                    <th>Suppression</th>
+                </tr>
+            </thead>
+            <tbody id="productTable">
+                {% for prd in prodLc %}
+                <tr>
+                    <td>{{ prd.id }}</td>
+                    <td>{{ prd.nomproduit }}</td>
+                    <td>{{ prd.type }}</td>
+                    <td>{{ prd.quantite }}</td>
+                    <td>{{ prd.prixinit }}</td>
+                    <td>{{ prd.prixtot }}</td>
+                    <td>{{ prd.benefice }}</td>
+                    <td>
+                        {% if prd.image %}
+                            <img src="{{ prd.image.url }}" alt="Image de {{ prd.nomproduit }}" class="img-thumbnail" width="100" height="100">
+                        {% else %}
+                            <span class="no-image"><i class="fa fa-image"></i> Pas d'image</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ prd.description }}</td>
+                    <td>
+                        <a href="{% url 'modfcha' prd.id %}" class="btn btn-edit"><i class="fa fa-edit"></i> Modifier</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'supchar' prd.id %}" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')">
+                            <i class="fa fa-trash"></i> Supprimer
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fonction de recherche en temps réel
+        document.getElementById("searchInput").addEventListener("keyup", function() {
+            let searchValue = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#productTable tr");
+
+            rows.forEach(row => {
+                let productName = row.cells[1].textContent.toLowerCase();
+                row.style.display = productName.includes(searchValue) ? "" : "none";
+            });
+        });
+    </script>
+</body>
+{% endblock %}

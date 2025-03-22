@@ -1,0 +1,47 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}Ajoutez un travailleur{% endblock %}
+
+{% block content %}
+<body style="background-color: peru;" class="ajouter-commande">
+    <h1>Ajouter un Client</h1>
+    <div style="margin-right: 13px;margin:auto; width: 50%" class="form-container">
+    <form style="nav-right: auto;" method="post" class="formajout">
+        {% csrf_token %}
+        
+       
+            <div class="form-control">
+                <label>Nom du Travailleur</label>
+                <input type="text" name="nomtra" class="form-control" placeholder="Ajoutez un travailleur" required>
+            </div>
+            <div class="form-control">
+                <label>Date du commencement</label>
+                <input type="datetime-local" name="datecomm" class="form-control" required>
+            </div>
+         
+            <div class="form-control">
+                <label>saleur</label>
+                <input   type="number" name="salr" class="form-control" placeholder="Ajoutez le saleur" >
+            </div>
+     
+        
+            <div class="form-control">
+                <label>Prendre</label>
+                <input value=0 id="prend" type="number" name="prndr" class="form-control" placeholder="Ajoutez le prendre " >
+            </div>
+            <div class="form-control">
+                <label>Rest </label>
+                <input value=0 id="resta" type="number" name="restsb" class="form-control" placeholder="Ajoutez le rest " >
+            </div>
+         
+    
+        
+        <button class="btn-submit"  type="submit">Ajoutez</button>
+    </form>
+</div>
+        
+
+</body>
+{% endblock %}

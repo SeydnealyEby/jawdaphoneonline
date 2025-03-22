@@ -1,0 +1,55 @@
+{% extends 'affichage/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-lg overflow-hidden">
+                <div class="row no-gutters">
+                    <div class="col-md-6">
+                        <div class="card-img-container">
+                            <img src="{{ item.image.url }}" alt="{{ item.nomproduit }}" class="img-fluid w-100 h-100 object-fit-cover">
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex flex-column justify-content-center p-4">
+                        <h2 class="card-title text-primary">{{ item.nomproduit }}</h2>
+                        <h4 class="text-danger font-weight-bold">{{ item.prixtot }} URM</h4>
+                        <p class="card-text text-muted">{{ item.description }}</p>
+                        <div class="mt-4">
+                        <a href="{% if type == 'produit' %}{% url 'checkout' item.id %}
+         {% elif type == 'chargeur' %}{% url 'checkout1' item.id %}
+         {% elif type == 'ecouteur' %}{% url 'checkout2' item.id %}{% endif %}"
+   class="btn btn-success btn-lg w-100">
+    Acheter Maintenant
+</a>
+
+                            <a href="{% url 'acceil' %}" class="btn btn-outline-secondary btn-lg w-100 mt-2">Retour à la Boutique</a>
+                        </div>
+                        {% if type == "chargeur" %}
+                            <p class="text-info mt-3">Ce produit est un chargeur.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card-img-container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .img-fluid {
+        max-height: 400px;
+        object-fit: cover;
+    }
+</style>
+{% endblock %}

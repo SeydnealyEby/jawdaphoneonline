@@ -1,0 +1,352 @@
+{% extends 'affichage/base.html' %}
+{% load static %}
+
+{% block title %}Accueil - Jawdaphone{% endblock %}
+
+{% block content %}
+<!-- Section Hero -->
+<div class="hero text-white text-center py-5">
+    <div class="container">
+        <p class="top-message animate__animated animate__fadeIn">Découvrez nos meilleurs téléphones et accessoires aux prix imbattables !</p>
+        <h1 class="display-4 animate__animated animate__fadeIn animate__delay-1s">Bienvenue sur Jawdaphone</h1>
+        <p class="lead animate__animated animate__fadeIn animate__delay-2s">Votre destination pour une technologie de qualité</p>
+
+    </div>
+</div>
+
+<!-- Section Produits -->
+<div class="container mt-5">
+    <!-- Téléphones -->
+    <div class="mb-5">
+        <h2 class="mb-4 text-center section-title">Nos Téléphones</h2>
+        <div class="row row-eq-height">
+            {% for produit in produits %}
+            <div class="col-md-4 mb-4">
+                <div class="card product-card h-100">
+                    <div class="card-img-container">
+                        <img src="{{ produit.image.url }}" alt="{{ produit.nomproduit }}" class="card-img-top">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title">{{ produit.nomproduit }}</h3>
+                        <p class="card-text">{{ produit.prixtot }} URM</p>
+                        <div class="mt-auto">
+                            <a href="{% url 'details' produit.id %}" class="btn btn-outline-primary">Voir</a>
+                            <a href="{% url 'checkout' produit.id %}" class="btn btn-primary">Acheter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Chargeurs -->
+    <div class="mb-5">
+        <h2 class="mb-4 text-center section-title">Nos Chargeurs</h2>
+        <div class="row row-eq-height">
+            {% for produit in chargeurs %}
+            <div class="col-md-4 mb-4">
+                <div class="card product-card h-100">
+                    <div class="card-img-container">
+                        <img src="{{ produit.image.url }}" alt="{{ produit.nomproduit }}" class="card-img-top">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title">{{ produit.nomproduit }}</h3>
+                        <p class="card-text">{{ produit.prixtot }} URM</p>
+                        <div class="mt-auto">
+                            <a href="{% url 'details' produit.id %}" class="btn btn-outline-primary">Voir</a>
+                            <a href="{% url 'checkout1' produit.id %}" class="btn btn-primary">Acheter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Écouteurs -->
+    <div class="mb-5">
+        <h2 class="mb-4 text-center section-title">Nos Écouteurs</h2>
+        <div class="row row-eq-height">
+            {% for produit in ecouteurs %}
+            <div class="col-md-4 mb-4">
+                <div class="card product-card h-100">
+                    <div class="card-img-container">
+                        <img src="{{ produit.image.url }}" alt="{{ produit.nomproduit }}" class="card-img-top">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title">{{ produit.nomproduit }}</h3>
+                        <p class="card-text">{{ produit.prixtot }} URM</p>
+                        <div class="mt-auto">
+                            <a href="#" class="btn btn-outline-primary">Voir</a>
+                            <a href="{% url 'checkout1' produit.id %}" class="btn btn-primary">Acheter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Section Newsletter -->
+<!-- Section Newsletter -->
+<div class="newsletter bg-light py-5">
+    <div class="container text-center">
+        <h2 class="mb-4 animate__animated animate__fadeIn">Rejoignez la Famille Jawdaphone</h2>
+        <p class="lead mb-4 animate__animated animate__fadeIn animate__delay-1s">
+            Profitez d'offres exclusives, de promotions spéciales et soyez les premiers informés de nos nouveautés !
+        </p>
+        <div class="newsletter-benefits mb-4 animate__animated animate__fadeIn animate__delay-2s">
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <i class="fas fa-gift mb-2"></i>
+                    <p>-10% sur votre première commande</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="fas fa-bell mb-2"></i>
+                    <p>Alertes promotions exclusives</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="fas fa-ticket-alt mb-2"></i>
+                    <p>Accès prioritaire aux ventes privées</p>
+                </div>
+            </div>
+        </div>
+        <form class="form-inline justify-content-center animate__animated animate__fadeIn animate__delay-3s">
+            <a class="btn btn-primary btn-lg" href="{% url 'sinscrit' %}">
+                Rejoindre maintenant
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Styles globaux */
+      /* Styles globaux */
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        position: relative;
+    }
+
+    body::before,
+    body::after {
+        content: '';
+        position: fixed;
+        left: 0;
+        right: 0;
+        height: 200px;
+        z-index: -1;
+    }
+
+    body::before {
+        top: 0;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+    }
+
+    body::after {
+        bottom: 0;
+        background: linear-gradient(135deg, #2575fc, #6a11cb);
+    }
+
+    /* Section Hero */
+    .hero {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        padding: 120px 0;
+        border-radius: 0 0 20px 20px;
+        color: #fff;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .hero p {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+
+    .hero .btn {
+        margin-top: 20px;
+        padding: 12px 35px;
+        border-radius: 30px;
+        font-size: 1.2rem;
+        background-color: #ffdd57;
+        color: #333;
+        font-weight: 600;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    .hero .btn:hover {
+        background-color: #ffcc00;
+        color: #333;
+        transform: translateY(-3px);
+    }
+    .hero .top-message {
+        font-size: 1.3rem;
+        color: #ffdd57;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Titres des sections */
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2575fc;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: #ffdd57;
+        margin: 10px auto 0;
+        border-radius: 2px;
+    }
+
+    /* Cartes de produits */
+    .product-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: #fff;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-container {
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1;
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .card-text {
+        font-size: 1.2rem;
+        color: #2575fc;
+        margin-bottom: 15px;
+    }
+
+    .btn-outline-primary {
+        border-color: #2575fc;
+        color: #2575fc;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #2575fc;
+        color: #fff;
+    }
+
+    .btn-primary {
+        background-color: #2575fc;
+        border-color: #2575fc;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #1a5bbf;
+        border-color: #1a5bbf;
+    }
+
+    /* Section Newsletter */
+    .newsletter {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+        padding: 60px 0;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .newsletter h2 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .newsletter p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+    .newsletter .btn {
+        background-color: #ffdd57;
+        color: #333;
+        font-weight: 600;
+        padding: 12px 35px;
+        border-radius: 30px;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    .newsletter .btn:hover {
+        background-color: #ffcc00;
+        color: #333;
+        transform: translateY(-3px);
+    }
+
+    /* Animations */
+    .animate__animated {
+        animation-duration: 1s;
+    }
+
+    .animate__fadeIn {
+        animation-name: fadeIn;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+{% endblock %}

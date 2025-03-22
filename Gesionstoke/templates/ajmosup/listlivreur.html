@@ -1,0 +1,113 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}Liste des Livreurs{% endblock %}
+
+{% block content %}
+<body class="page-l">
+    <div class="container mt-4">
+        <h1 class="text-center text-primary mb-4">Liste des Livreurs</h1>
+
+        <!-- Barre de recherche -->
+        <div class="search-container">
+            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un livreur...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <!-- Tableau des livreurs -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover shadow">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom de livreur</th>
+                        <th>Date de commencement</th>
+                        <th>Saleur</th>
+                        <th>Matricule</th>
+                        <th>Téléphone</th>
+                        <th>Modification</th>
+                        <th>Suppression</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lst in lstliv %}
+                    <tr>
+                        <td>{{ lst.id }}</td>
+                        <td>{{ lst.namesf }}</td>
+                        <td>{{ lst.datecommence }}</td>
+                        <td>{{ lst.saleur }}</td>
+                        <td>{{ lst.mariculv }}</td>
+                        <td>{{ lst.numv }}</td>
+                        <td>
+                            <a href="{% url 'modvliv' lst.id %}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'supprimerlvt' lst.id %}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Script pour la recherche -->
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    <style>
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px; /* Ajustez la largeur selon vos besoins */
+            margin: 20px auto; /* Centrer la barre de recherche */
+        }
+        
+        .search-container .form-control {
+            width: 100%;
+            padding: 10px 40px 10px 15px; /* Espace pour l'icône */
+            border: 2px solid #ddd; /* Bordure légère */
+            border-radius: 25px; /* Coins arrondis */
+            font-size: 16px;
+            outline: none; /* Supprime la bordure bleue au focus */
+            transition: border-color 0.3s ease; /* Animation au focus */
+        }
+        
+        .search-container .form-control:focus {
+            border-color: #28a745; /* Changement de couleur au focus */
+        }
+        
+        .search-container .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888; /* Couleur de l'icône */
+            cursor: pointer;
+            transition: color 0.3s ease; /* Animation au survol */
+        }
+        
+        .search-container .search-icon:hover {
+            color: #28a745; /* Changement de couleur au survol */
+        }
+    </style>
+</body>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}Modifier Entrée{% endblock %}
+
+{% block content %}
+<body style="background-color: yellowgreen;" class="page-modifier-entree">
+    <h1 style="background-color: rgba(112, 137, 144, 0.164);">Modifier une Entrée</h1>
+  
+    <form style="background-color: rgb(22, 146, 53);" method="post">
+        {% csrf_token %}
+
+        <!-- Champ pour modifier le produit -->
+         <div class="form-left">
+        <div class="form-control">
+            <label>Produit</label>
+            <input type="text" name="produit1" class="form-control" placeholder="Modifier le produit" value="{{ entree1.produit }}">
+        </div>
+
+        <!-- Champ pour modifier le type -->
+        <div class="form-control">
+            <label>Type</label>
+            <input type="text" name="Typepr" class="form-control" placeholder="Modifier le type" value="{{ entree1.typeO1 }}">
+        </div>
+
+        <!-- Champ pour modifier le prix -->
+        <div class="form-control">
+            <label>Prix</label>
+            <input type="number" name="prixem" class="form-control" placeholder="Modifier le prix" value="{{ entree1.prix }}">
+        </div>
+        <div class="form-control">
+            <label>benefice</label>
+            <input type="number" name="prixem" class="form-control" placeholder="Modifier le benefice" value="{{ entree1.benefice }}">
+        </div>
+
+        <!-- Champ pour modifier le travailleur -->
+        <div class="form-control">
+            <label>Travailleur</label>
+            <input type="text" name="travailleurem" class="form-control" placeholder="Modifier le travailleur" value="{{ entree1.travailleur }}">
+        </div>
+    </div>
+        <!-- Champ pour modifier la description -->
+         <div class="form-left">
+        <div class="form-control">
+            <label>Description</label>
+            <textarea id="description" name="descriptionen" class="form-control" placeholder="Modifier la description" rows="4" required>{{ entree1.description }}</textarea>
+        </div>
+
+        <!-- Bouton pour enregistrer les modifications -->
+        <button type="submit" class="btn btn-primary mt-3">Enregistrer les modifications</button>
+    </div>
+    </form>
+</body>
+{% endblock %}

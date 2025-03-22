@@ -1,0 +1,59 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}{% endblock %}
+{% block content %}
+<body class="page-liste-boubous">
+    <div class="container">
+        <h1>Liste des Entrées</h1>
+   
+
+    <table class="table" border="1" style="border-collapse: collapse; width: 100%;">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Produit</th>
+                <th>Type</th>
+                <th>Prix</th>
+                <th>benefice</th>
+                <th>Travailleur</th>
+                <th>Description</th>
+                <th>modification</th>
+                <th>Suppression</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entree in tablelist %}
+            <tr>
+                <td>{{ entree.id }}</td>
+                <td>{{ entree.produit }}</td>
+                <td>{{ entree.typeO1 }}</td>
+                <td>{{ entree.prix }}</td>
+                <td>{{ entree.benefice }}</td>
+                <td>{{ entree.travailleur }}</td>
+                <td>{{ entree.description }}</td>
+                <td>
+                    <a href="{% url 'modifierA' entree.id %}" class="btn btn-edit">Modifier</a> 
+                   
+                </td>
+                 <td>
+
+                    <a href="{% url 'supprimerA' entree.id %}" class="btn btn-delete">supprimer</a>
+                 </td>
+             
+              
+                {%comment%}
+                <td>
+                    <a href="{% url 'modfierB' boubou.id %}">Modifier</a> 
+                    <a href="{% url 'supprimerB' boubou.id %}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce boubou ?')">supprimer</a> 
+                  
+                </td>
+                {%endcomment%}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</body>
+{% endblock %}

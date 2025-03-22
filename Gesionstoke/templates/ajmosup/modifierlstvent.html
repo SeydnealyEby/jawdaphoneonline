@@ -1,0 +1,322 @@
+{% extends 'ajmosup/base.html' %}
+{% load static %}
+
+{% block title %}Modifier le produit{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="form-container">
+        <div class="form-header">
+            <h1><i class="fas fa-edit"></i> Modifier le Produit</h1>
+            <p class="subtitle">Modifiez les détails du produit</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="product-form">
+            {% csrf_token %}
+            
+            <div class="form-grid">
+                <!-- Informations Produit -->
+                <div class="form-section">
+                    <h3><i class="fas fa-box"></i> Informations Produit</h3>
+                    <div class="form-group floating">
+                        <input id="prod" type="text" name="modprod" class="form-control" value="{{ prod.nomproduit }}" required>
+                        <label for="prod">Nom du produit</label>
+                    </div>
+                    <div class="form-group floating">
+                        <input id="tussi" type="text" name="type" class="form-control" value="{{ prod.type }}" required>
+                        <label for="tussi">Type</label>
+                    </div>
+                    <div class="form-group floating">
+                        <textarea id="description" name="description" class="form-control" required>{{ prod.description }}</textarea>
+                        <label for="description">Description</label>
+                    </div>
+                </div>
+
+                <!-- Prix et Quantité -->
+                <div class="form-section">
+                    <h3><i class="fas fa-tags"></i> Prix et Quantité</h3>
+                    <div class="form-row">
+                        <div class="form-group floating">
+                            <input id="prixach" type="number" name="prixac" class="form-control" value="{{ prod.prixinit }}" step="0.01" required>
+                            <label for="prixach">Prix d'achat (MRU)</label>
+                        </div>
+                        <div class="form-group floating">
+                            <input id="prixv" type="number" name="prixv" class="form-control" value="{{ prod.prixtot }}" step="0.01" required>
+                            <label for="prixv">Prix de vente (MRU)</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group floating">
+                            <input id="qte" type="number" name="quantite" class="form-control" value="{{ prod.quantite }}" required>
+                            <label for="qte">Quantité</label>
+                        </div>
+                        <div class="form-group floating">
+                            <input id="benefice" type="number" name="benefice" class="form-control" value="{{ prod.benefice }}" step="0.01" readonly>
+                            <label for="benefice">Bénéfice (MRU)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image -->
+                <div class="form-section image-section">
+                    <h3><i class="fas fa-image"></i> Image du Produit</h3>
+                    <div class="image-preview">
+                        {% if prod.image %}
+                            <img src="{{ prod.image.url }}" alt="Image actuelle" class="current-image">
+                        {% else %}
+                            <div class="no-image">
+                                <i class="fas fa-image"></i>
+                                <p>Aucune image</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="image" class="file-input-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Choisir une nouvelle image</span>
+                        </label>
+                        <input id="image" type="file" name="image" class="file-input" accept="image/*">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="{% url 'listvte' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Annuler
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .page-wrapper {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f6f8fa 0%, #f0f2f5 100%);
+        padding: 2rem;
+    }
+
+    .form-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        padding: 2rem;
+        color: white;
+        text-align: center;
+    }
+
+    .form-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .subtitle {
+        margin-top: 0.5rem;
+        opacity: 0.8;
+    }
+
+    .product-form {
+        padding: 2rem;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .form-section {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 15px;
+    }
+
+    .form-section h3 {
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .floating {
+        position: relative;
+    }
+
+    .floating label {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: white;
+        padding: 0 0.5rem;
+        color: #666;
+        transition: all 0.3s;
+        pointer-events: none;
+    }
+
+    .floating input:focus + label,
+    .floating input:not(:placeholder-shown) + label,
+    .floating textarea:focus + label,
+    .floating textarea:not(:placeholder-shown) + label {
+        top: 0;
+        font-size: 0.85rem;
+        color: #3498db;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e0e6ed;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        outline: none;
+    }
+
+    .image-section {
+        text-align: center;
+    }
+
+    .image-preview {
+        margin-bottom: 1.5rem;
+    }
+
+    .current-image {
+        max-width: 200px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+
+    .current-image:hover {
+        transform: scale(1.05);
+    }
+
+    .file-input-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        background: #e0e6ed;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .file-input-label:hover {
+        background: #d1d8e0;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e0e6ed;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: #3498db;
+        color: white;
+    }
+
+    .btn-secondary {
+        background: #e0e6ed;
+        color: #2c3e50;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        .page-wrapper {
+            padding: 1rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+    // Calcul automatique du bénéfice
+    document.querySelectorAll('#prixach, #prixv').forEach(input => {
+        input.addEventListener('input', calculateProfit);
+    });
+
+    function calculateProfit() {
+        const prixAchat = parseFloat(document.getElementById('prixach').value) || 0;
+        const prixVente = parseFloat(document.getElementById('prixv').value) || 0;
+        const benefice = prixVente - prixAchat;
+        document.getElementById('benefice').value = benefice.toFixed(2);
+    }
+
+    // Prévisualisation de l'image
+    document.getElementById('image').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = document.querySelector('.current-image') || document.createElement('img');
+                img.src = event.target.result;
+                img.classList.add('current-image');
+                const container = document.querySelector('.image-preview');
+                container.innerHTML = '';
+                container.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+{% endblock %}

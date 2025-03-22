@@ -1,0 +1,535 @@
+{% extends 'ajmosup/base.html' %}
+{% load static %}
+
+{% block title %}Modifier Commande{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fas fa-edit"></i> Modifier la Commande</h1>
+            <p class="subtitle">Modifiez les détails de la commande #{{ client1.id }}</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="edit-form">
+            {% csrf_token %}
+            <input type="hidden" id="selectedProducts" name="nomtussi" value="{{ client1.nametussi }}">
+            <div class="form-grid">
+                <!-- Section Informations Client -->
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Informations Client</h3>
+                    <div class="form-group">
+                        <label for="nomclient">Nom du Client</label>
+                        <div class="floating-input">
+                            <input type="text" 
+                            id="nomclient" 
+                            name="nomclient" 
+                            value="{{ client1.nameclient }}"
+                            placeholder=" "
+                            required>
+                           
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="numtelephone">Numéro de Téléphone</label>
+                        <div class="floating-input">
+                            <input type="tel" 
+                            id="numtelephone" 
+                            name="numtelephone" 
+                            value="{{ client1.numtel }}"
+                            placeholder=" "
+                            pattern="^[234]\d{7}$"
+                            required>
+                          
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Produits -->
+                <div class="form-section">
+                    <h3><i class="fas fa-shopping-cart"></i> Produits</h3>
+                    <div class="products-grid">
+                        <div class="product-card">
+                            <input type="checkbox" 
+                                   id="telephone" 
+                                   name="produits[]" 
+                                   value="telephone"
+                                   {% if 'telephone' in client1.nametussi %}checked{% endif %}
+                                   class="product-checkbox">
+                            <label for="telephone" class="product-label">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Téléphone</span>
+                            </label>
+                        </div>
+                        <div class="product-card">
+                            <input type="checkbox" 
+                                   id="chargeur" 
+                                   name="produits[]" 
+                                   value="chargeur"
+                                   {% if 'chargeur' in client1.nametussi %}checked{% endif %}
+                                   class="product-checkbox">
+                            <label for="chargeur" class="product-label">
+                                <i class="fas fa-charging-station"></i>
+                                <span>Chargeur</span>
+                            </label>
+                        </div>
+                        <div class="product-card">
+                            <input type="checkbox" 
+                                   id="ecouteur" 
+                                   name="produits[]" 
+                                   value="ecouteur"
+                                   {% if 'ecouteur' in client1.nametussi %}checked{% endif %}
+                                   class="product-checkbox">
+                            <label for="ecouteur" class="product-label">
+                                <i class="fas fa-headphones"></i>
+                                <span>Écouteur</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Photos -->
+                <div class="form-section">
+                    <h3><i class="fas fa-camera"></i> Photos du Produit</h3>
+                    <div class="photos-grid">
+                        <div class="photo-upload">
+                            <input type="file" 
+                                   id="photo1" 
+                                   name="photo1" 
+                                   accept="image/*"
+                                   class="photo-input"
+                                   onchange="previewImage(this, 'preview1')">
+                            <label for="photo1" class="photo-label">
+                                <div id="preview1" class="preview">
+                                    {% if client1.photo1 %}
+                                        <img src="{{ client1.photo1.url }}" alt="Photo 1">
+                                    {% else %}
+                                        <i class="fas fa-plus"></i>
+                                        <span>Photo 1</span>
+                                    {% endif %}
+                                </div>
+                            </label>
+                        </div>
+                        <div class="photo-upload">
+                            <input type="file" 
+                                   id="photo2" 
+                                   name="photo2" 
+                                   accept="image/*"
+                                   class="photo-input"
+                                   onchange="previewImage(this, 'preview2')">
+                            <label for="photo2" class="photo-label">
+                                <div id="preview2" class="preview">
+                                    {% if client1.photo2 %}
+                                        <img src="{{ client1.photo2.url }}" alt="Photo 2">
+                                    {% else %}
+                                        <i class="fas fa-plus"></i>
+                                        <span>Photo 2</span>
+                                    {% endif %}
+                                </div>
+                            </label>
+                        </div>
+                        <div class="photo-upload">
+                            <input type="file" 
+                                   id="photo3" 
+                                   name="photo3" 
+                                   accept="image/*"
+                                   class="photo-input"
+                                   onchange="previewImage(this, 'preview3')">
+                            <label for="photo3" class="photo-label">
+                                <div id="preview3" class="preview">
+                                    {% if client1.photo3 %}
+                                        <img src="{{ client1.photo3.url }}" alt="Photo 3">
+                                    {% else %}
+                                        <i class="fas fa-plus"></i>
+                                        <span>Photo 3</span>
+                                    {% endif %}
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Détails -->
+                <div class="form-section">
+                    <h3><i class="fas fa-info-circle"></i> Détails</h3>
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <div class="floating-input">
+                            <input type="text" 
+                                   id="type" 
+                                   name="nomdessin" 
+                                   value="{{ client1.dessin }}"
+                                   required>
+                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <div class="floating-textarea">
+                            <textarea id="description" 
+                                    name="descriptionen" 
+                                    rows="4" 
+                                    required>{{ client1.description }}</textarea>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Dates -->
+                <div class="form-section">
+                    <h3><i class="fas fa-calendar-alt"></i> Dates</h3>
+                    <div class="form-group">
+                        <label for="daterevenir">Date de Retour</label>
+                        <div class="floating-input">
+                            <input type="datetime-local" 
+                                   id="daterevenir" 
+                                   name="daterevenir" 
+                                   value="{{ client1.daterevenir|date:'Y-m-d\\TH:i' }}"
+                                   required>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Enregistrer les modifications
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+
+    .product-checkbox {
+        display: none;
+    }
+    
+    .product-label {
+        cursor: pointer;
+        padding: 1.5rem;
+        border: 2px solid var(--border-color);
+        border-radius: var(--border-radius);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+    }
+    
+    .product-label i {
+        font-size: 2rem;
+        color: var(--gray-color);
+        transition: all 0.3s ease;
+    }
+    
+    .product-checkbox:checked + .product-label {
+        border-color: var(--primary-color);
+        background: rgba(37, 99, 235, 0.1);
+    }
+    
+    .product-checkbox:checked + .product-label i {
+        color: var(--primary-color);
+    }
+    
+    .preview.has-image {
+        border-style: solid;
+        border-color: var(--primary-color);
+    }
+    
+    .preview i {
+        font-size: 2rem;
+        color: var(--gray-color);
+    }
+    :root {
+        --primary-color: #2563eb;
+        --secondary-color: #1e40af;
+        --success-color: #059669;
+        --danger-color: #dc2626;
+        --warning-color: #d97706;
+        --background-color: #f3f4f6;
+        --text-color: #1f2937;
+        --border-color: #e5e7eb;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    .page-wrapper {
+        min-height: 100vh;
+        background: var(--background-color);
+        padding: 2rem;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 1rem;
+        box-shadow: var(--shadow-lg);
+        padding: 2rem;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .subtitle {
+        color: #6b7280;
+        font-size: 1.1rem;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-section {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-color);
+    }
+
+    .form-section h3 {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--text-color);
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .floating-input,
+    .floating-textarea {
+        position: relative;
+    }
+
+    .floating-input input,
+    .floating-textarea textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid var(--border-color);
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        background: transparent;
+        transition: all 0.3s ease;
+    }
+
+    .floating-input input:focus,
+    .floating-textarea textarea:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        outline: none;
+    }
+
+    .floating-input label,
+    .floating-textarea label {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: white;
+        padding: 0 0.5rem;
+        color: #6b7280;
+        transition: all 0.3s ease;
+        pointer-events: none;
+    }
+
+    .floating-textarea label {
+        top: 1rem;
+        transform: none;
+    }
+
+    .photos-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .photo-upload {
+        position: relative;
+        aspect-ratio: 1;
+    }
+
+    .photo-input {
+        display: none;
+    }
+
+    .photo-label {
+        cursor: pointer;
+        display: block;
+        height: 100%;
+    }
+
+    .preview {
+        width: 100%;
+        height: 100%;
+        border: 2px dashed var(--border-color);
+        border-radius: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .preview:hover {
+        border-color: var(--primary-color);
+        background: rgba(37, 99, 235, 0.05);
+    }
+
+    .preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid var(--border-color);
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-primary {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .btn-secondary {
+        background: var(--border-color);
+        color: var(--text-color);
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+    }
+
+    @media (max-width: 768px) {
+        .page-wrapper {
+            padding: 1rem;
+        }
+
+        .container {
+            padding: 1rem;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .photos-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+    function previewImage(input, previewId) {
+        const preview = document.getElementById(previewId);
+        const file = input.files[0];
+    
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                preview.classList.add('has-image');
+            }
+            reader.readAsDataURL(file);
+        } else if (preview.querySelector('img')) {
+            // Garder l'image existante si aucun nouveau fichier n'est sélectionné
+            return;
+        } else {
+            preview.innerHTML = `
+                <i class="fas fa-plus"></i>
+                <span>Photo ${previewId.slice(-1)}</span>
+            `;
+            preview.classList.remove('has-image');
+        }
+    }
+    
+    // Initialiser les produits sélectionnés au chargement
+    window.addEventListener('DOMContentLoaded', function() {
+        // Mettre à jour les checkboxes basé sur les produits existants
+        const existingProducts = document.getElementById('selectedProducts').value;
+        const checkboxes = document.querySelectorAll('.product-checkbox');
+        
+        checkboxes.forEach(checkbox => {
+            if (existingProducts.includes(checkbox.value)) {
+                checkbox.checked = true;
+            }
+        });
+    
+        // Ajouter les écouteurs d'événements pour les changements
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectedProducts);
+        });
+    
+        // Ajouter la classe has-image aux prévisualisations existantes
+        document.querySelectorAll('.preview').forEach(preview => {
+            if (preview.querySelector('img')) {
+                preview.classList.add('has-image');
+            }
+        });
+    });
+    
+    function updateSelectedProducts() {
+        const checkedProducts = Array.from(document.querySelectorAll('.product-checkbox:checked'))
+            .map(cb => cb.value)
+            .join(', ');
+        document.getElementById('selectedProducts').value = checkedProducts;
+    }
+    </script>>
+{% endblock %}

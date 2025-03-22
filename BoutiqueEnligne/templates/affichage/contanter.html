@@ -1,0 +1,136 @@
+{% extends 'affichage/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="text-center mb-5">
+                <h2 class="display-4">📞 Contactez-nous</h2>
+                <p class="lead text-muted">Nous sommes là pour vous aider ! Choisissez votre moyen de communication préféré.</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- WhatsApp -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm hover-card">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle bg-success mb-3">
+                                <i class="fab fa-whatsapp fa-2x text-white"></i>
+                            </div>
+                            <h3 class="h4 mb-3">WhatsApp</h3>
+                            <p class="text-muted mb-3">Contactez-nous directement sur WhatsApp pour une réponse rapide</p>
+                            <a href="https://wa.me/22230454377" class="btn btn-success btn-lg" target="_blank">
+                                <i class="fab fa-whatsapp me-2"></i>Nous contacter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Téléphone -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm hover-card">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle bg-primary mb-3">
+                                <i class="fas fa-phone-alt fa-2x text-white"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Téléphone</h3>
+                            <p class="text-muted mb-3">Appelez-nous directement pour discuter de vos besoins</p>
+                            <a href="tel:+22222222222" class="btn btn-primary btn-lg">
+                                <i class="fas fa-phone-alt me-2"></i>+222 22 22 22 22
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm hover-card">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle bg-danger mb-3">
+                                <i class="fas fa-envelope fa-2x text-white"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Email</h3>
+                            <p class="text-muted mb-3">Envoyez-nous un email pour plus d'informations</p>
+                            <a href="mailto:jawdaphone94@gmail.com" class="btn btn-danger btn-lg">
+                                <i class="fas fa-envelope me-2"></i>Envoyer un email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Localisation -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm hover-card">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle bg-warning mb-3">
+                                <i class="fas fa-map-marker-alt fa-2x text-white"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Notre Adresse</h3>
+                            <p class="text-muted mb-3">Visitez notre boutique physique</p>
+                            <p class="text-muted">123 Rue Example, Ville, Pays</p>
+                            <a href="https://goo.gl/maps/votreAdresse" class="btn btn-warning btn-lg" target="_blank">
+                                <i class="fas fa-directions me-2"></i>Voir sur la carte
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Horaires d'ouverture -->
+            <div class="mt-5 text-center">
+                <h3 class="h4 mb-4">Horaires d'ouverture</h3>
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td class="text-muted">Lundi - Vendredi</td>
+                                <td>8h00 - 18h00</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Samedi</td>
+                                <td>9h00 - 16h00</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Dimanche</td>
+                                <td>Fermé</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 15px;
+    }
+
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .btn {
+        border-radius: 25px;
+        padding: 10px 25px;
+    }
+
+    .table td {
+        padding: 12px;
+        font-size: 1.1rem;
+    }
+</style>
+{% endblock %}

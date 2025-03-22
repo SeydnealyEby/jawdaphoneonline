@@ -1,0 +1,41 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}Modifier le travailleur{% endblock %}
+
+{% block content %}
+<h1>Modifier un travailleur</h1>
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-control">
+        <label for="trav">Nom de travailleur</label>
+        <input id="trav" type="text" name="travail" class="form-control" placeholder="Modifier le travailleur" value="{{ travt.namesf }}">
+    </div>
+    
+    <div class="form-control">
+        <label for="dattc">date du commencement</label>
+        <input id="tussi" type="datetime-local" name="datecom" class="form-control" placeholder="Modifier le commencement" value="{{ travt.datecommence }}">
+    </div>
+    
+    <div class="form-control">
+        <label for="prixach">saleur</label>
+        <input id="prixach" type="number" name="saleurt" class="form-control" placeholder="Modifier le saleur" value="{{ travt.saleur }}">
+    </div>
+    
+
+    
+    <div class="form-control">
+        <label for="qte">Prendre</label>
+        <input id="qte" type="number" name="PrendreT" class="form-control" placeholder="Modifier le prendre" value="{{ travt.prendre }}">
+    </div>
+    
+    <div class="form-control">
+        <label for="benefice">Rest</label>
+        <input id="benefice" type="number" name="rest" class="form-control" placeholder="Modifier le Rest" value="{{ travt.rset }}">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+</form>
+{% endblock %}

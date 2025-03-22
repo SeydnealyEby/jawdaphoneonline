@@ -1,0 +1,179 @@
+{% extends 'ajmosup/base.html' %}
+
+{% load static %}
+
+{% block title %}Modifier le produit{% endblock %}
+
+{% block content %}
+<head>
+    <!-- FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background-color: transparent; /* Fond transparent */
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: transparent; /* Fond transparent */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-left, .form-right {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group img {
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group p {
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button[type="submit"] i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body class="page-ajouter-command">
+    <h1><i class="fa fa-edit"></i> Modifier un produit</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-left">
+            <div class="form-group">
+                <label for="prod"><i class="fa fa-tag"></i> Nom du produit</label>
+                <input id="prod" type="text" name="modprod" class="form-control" 
+                       placeholder="Modifier le produit" value="{{ ecouteurv.nomproduit }}">
+            </div>
+
+            <div class="form-group">
+                <label for="tussi"><i class="fa fa-list"></i> Type du produit</label>
+                <input id="tussi" type="text" name="type" class="form-control" 
+                       placeholder="Modifier le type" value="{{ ecouteurv.type }}">
+            </div>
+
+            <div class="form-group">
+                <label for="prixach"><i class="fa fa-dollar-sign"></i> Prix d'achat</label>
+                <input id="prixach" type="number" name="prixac" class="form-control" 
+                       placeholder="Modifier le prix" value="{{ ecouteurv.prixinit }}" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label for="prixv"><i class="fa fa-dollar-sign"></i> Prix de vente</label>
+                <input id="prixv" type="number" name="prixv" class="form-control" 
+                       placeholder="Modifier le prix" value="{{ ecouteurv.prixtot }}" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label for="qte"><i class="fa fa-box"></i> Quantité</label>
+                <input id="qte" type="number" name="quantite" class="form-control" 
+                       placeholder="Modifier la quantité" value="{{ ecouteurv.quantite }}">
+            </div>
+        </div>
+
+        <div class="form-right">
+            <div class="form-group">
+                <label for="benefice"><i class="fa fa-chart-line"></i> Bénéfice</label>
+                <input id="benefice" type="number" name="benefice" class="form-control" 
+                       placeholder="Modifier le bénéfice" value="{{ ecouteurv.benefice }}" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fa fa-image"></i> Image actuelle</label><br>
+                {% if ecouteurv.image %}
+                    <img src="{{ ecouteurv.image.url }}" alt="Image actuelle" width="150">
+                {% else %}
+                    <p>Aucune image disponible</p>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="image"><i class="fa fa-upload"></i> Changer l'image</label>
+                <input id="image" type="file" name="image" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="description"><i class="fa fa-file-alt"></i> Description</label>
+                <textarea id="description" name="description" class="form-control" 
+                          placeholder="Modifier la description">{{ ecouteurv.description }}</textarea>
+            </div>
+
+            <button type="submit"><i class="fa fa-save"></i> Enregistrer les modifications</button>
+        </div>
+    </form>
+</body>
+{% endblock %}

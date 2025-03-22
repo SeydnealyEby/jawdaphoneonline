@@ -1,0 +1,415 @@
+{% extends 'ajmosup/base.html' %}
+{% load static %}
+
+{% block title %}Modifier le produit{% endblock %}
+
+{% block content %}
+<div class="edit-product-container">
+    <div class="edit-card">
+        <div class="card-header">
+            <h1><i class="fas fa-mobile-alt"></i> Modifier le téléphone</h1>
+            <p class="text-muted">Modifiez les informations du produit</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="edit-form">
+            {% csrf_token %}
+            
+            <div class="form-grid">
+                <!-- Left Column -->
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="prod">
+                            <i class="fas fa-mobile-alt"></i> Nom du produit
+                        </label>
+                        <input id="prod" type="text" name="modprod" 
+                               class="form-control" value="{{ modfiertel.nomproduit }}"
+                               placeholder="Nom du produit">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tussi">
+                            <i class="fas fa-tag"></i> Type de produit
+                        </label>
+                        <input id="tussi" type="text" name="tussi" 
+                               class="form-control" value="{{ modfiertel.tussi }}"
+                               placeholder="Type de produit">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prixach">
+                            <i class="fas fa-shopping-cart"></i> Prix d'achat (MRU)
+                        </label>
+                        <input id="prixach" type="number" name="prixac" 
+                               class="form-control" value="{{ modfiertel.prixinit }}"
+                               placeholder="Prix d'achat">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prixv">
+                            <i class="fas fa-tags"></i> Prix de vente (MRU)
+                        </label>
+                        <input id="prixv" type="number" name="prixv" 
+                               class="form-control" value="{{ modfiertel.prixtot }}"
+                               placeholder="Prix de vente">
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="qte">
+                            <i class="fas fa-boxes"></i> Quantité
+                        </label>
+                        <input id="qte" type="number" name="quantite" 
+                               class="form-control" value="{{ modfiertel.quantite }}"
+                               placeholder="Quantité">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="benefice">
+                            <i class="fas fa-chart-line"></i> Bénéfice (MRU)
+                        </label>
+                        <input id="benefice" type="number" name="benefice" 
+                               class="form-control" value="{{ modfiertel.benefice }}"
+                               placeholder="Bénéfice" readonly>
+                    </div>
+
+                    <div class="form-group image-preview-group">
+                        <label>
+                            <i class="fas fa-image"></i> Image actuelle
+                        </label>
+                        <div class="current-image">
+                            {% if modfiertel.image %}
+                                <img src="{{ modfiertel.image.url }}" 
+                                     alt="Image actuelle" 
+                                     class="preview-image"
+                                     onclick="showImagePreview(this.src)">
+                            {% else %}
+                                <div class="no-image">
+                                    <i class="fas fa-image"></i>
+                                    <p>Aucune image</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">
+                            <i class="fas fa-upload"></i> Nouvelle image
+                        </label>
+                        <div class="file-upload">
+                            <input type="file" id="image" name="image" class="form-control">
+                            <label for="image" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Choisir une image</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description Section -->
+            <div class="form-group description-group">
+                <label for="description">
+                    <i class="fas fa-align-left"></i> Description
+                </label>
+                <textarea id="description" name="description" 
+                          class="form-control" rows="4"
+                          placeholder="Description du produit">{{ modfiertel.description }}</textarea>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Enregistrer les modifications
+                </button>
+                <a href="{% url 'listbou' %}" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Image Preview Modal -->
+<div id="imageModal" class="modal">
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+<style>
+    .edit-product-container {
+        padding: 2rem;
+        background-color: #f8f9fa;
+        min-height: calc(100vh - 4rem);
+    }
+
+    .edit-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        padding: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .card-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .card-header h1 {
+        color: #2c3e50;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .card-header h1 i {
+        color: #3498db;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        color: #2c3e50;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-group label i {
+        color: #3498db;
+        margin-right: 0.5rem;
+        width: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+        outline: none;
+    }
+
+    .image-preview-group .current-image {
+        margin-top: 1rem;
+    }
+
+    .preview-image {
+        max-width: 150px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        border: 2px solid #e0e0e0;
+    }
+
+    .preview-image:hover {
+        transform: scale(1.05);
+        border-color: #3498db;
+    }
+
+    .no-image {
+        width: 150px;
+        height: 150px;
+        background: #f8f9fa;
+        border: 2px dashed #e0e0e0;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #95a5a6;
+    }
+
+    .file-upload {
+        position: relative;
+    }
+
+    .file-upload input[type="file"] {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .file-label {
+        display: block;
+        padding: 0.75rem;
+        background: #f8f9fa;
+        border: 2px dashed #e0e0e0;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .file-label:hover {
+        border-color: #3498db;
+        background: #f1f9ff;
+    }
+
+    .description-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+    }
+
+    .btn-secondary {
+        background: #95a5a6;
+        color: white;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1050;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.9);
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 80%;
+        max-height: 80%;
+        margin-top: 5%;
+        animation: zoomIn 0.3s ease;
+    }
+
+    .modal-close {
+        position: absolute;
+        right: 2rem;
+        top: 2rem;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+        transform: rotate(90deg);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+        .edit-product-container {
+            padding: 1rem;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+    // Image preview functionality
+    function showImagePreview(src) {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        modal.style.display = "block";
+        modalImg.src = src;
+    }
+
+    // File input handling
+    const fileInput = document.getElementById('image');
+    const fileLabel = document.querySelector('.file-label span');
+    
+    fileInput.addEventListener('change', function() {
+        fileLabel.textContent = this.files[0] ? this.files[0].name : 'Choisir une image';
+    });
+
+    // Modal close handlers
+    document.querySelector(".modal-close").onclick = function() {
+        document.getElementById("imageModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById("imageModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Automatic profit calculation
+    function calculateProfit() {
+        const buyPrice = parseFloat(document.getElementById('prixach').value) || 0;
+        const sellPrice = parseFloat(document.getElementById('prixv').value) || 0;
+        const quantity = parseInt(document.getElementById('qte').value) || 0;
+        const profit = (sellPrice - buyPrice) * quantity;
+        document.getElementById('benefice').value = profit;
+    }
+
+    document.getElementById('prixach').addEventListener('input', calculateProfit);
+    document.getElementById('prixv').addEventListener('input', calculateProfit);
+    document.getElementById('qte').addEventListener('input', calculateProfit);
+</script>
+{% endblock %}

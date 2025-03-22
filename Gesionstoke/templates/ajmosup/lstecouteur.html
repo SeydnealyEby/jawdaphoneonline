@@ -1,0 +1,144 @@
+{% extends 'ajmosup/base.html' %}
+{% load static %}
+
+{% block title %}Ajouter un produit{% endblock %}
+
+{% block content %}
+<body class="page-liste-boubous">
+    <div class="container">
+        <h1 class="text-center my-4">Liste des écouteurs</h1>
+
+        <!-- Champ de recherche -->
+        <div class="mb-3 input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+            </div>
+            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un produit...">
+        </div>
+
+        <table class="table table-striped table-hover" id="productsTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Produit</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix d'achat</th>
+                    <th scope="col">Prix de vente</th>
+                    <th scope="col">Bénéfice</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Modification</th>
+                    <th scope="col">Suppression</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prd in ecouteur %}
+                <tr>
+                    <td>{{ prd.id }}</td>
+                    <td class="product-name">{{ prd.nomproduit }}</td>
+                    <td>{{ prd.type }}</td>
+                    <td>{{ prd.quantite }}</td>
+                    <td>{{ prd.prixinit }}</td>
+                    <td>{{ prd.prixtot }}</td>
+                    <td>{{ prd.benefice }}</td>
+                    <td>
+                        {% if prd.image %}
+                            <img src="{{ prd.image.url }}" alt="Image de {{ prd.nomproduit }}" class="img-thumbnail" width="100" height="100">
+                        {% else %}
+                            <span class="text-muted">Pas d'image</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ prd.description }}</td>
+                    <td>
+                        <a href="{% url 'modecout' prd.id %}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-edit"></i> Modifier
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'supecout' prd.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')">
+                            <i class="fas fa-trash-alt"></i> Supprimer
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Ajout de Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Ajout du script de recherche -->
+    <script>
+        document.getElementById("searchInput").addEventListener("keyup", function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#productsTable tbody tr");
+
+            rows.forEach(row => {
+                let productName = row.querySelector(".product-name").textContent.toLowerCase();
+                row.style.display = productName.includes(filter) ? "" : "none";
+            });
+        });
+    </script>
+
+    <!-- Ajout de styles personnalisés -->
+    <style>
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .img-thumbnail {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-primary:hover, .btn-danger:hover {
+            opacity: 0.8;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        h1 {
+            color: #333;
+            font-family: 'Arial', sans-serif;
+        }
+        .form-control {
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .input-group-text {
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-right: 0;
+            border-radius: 20px 0 0 20px;
+        }
+        .table {
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .table thead th {
+            background-color: #007bff;
+            color: white;
+        }
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+    </style>
+</body>
+{% endblock %}

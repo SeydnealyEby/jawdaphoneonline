@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Jawdaphone{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- CSS personnalisé -->
+    <style>
+        /* Arrière-plan de la page entière */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff, #e6e9ff); /* Dégradé doux */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh; /* Assure que le fond couvre toute la hauteur de la page */
+        }
+        
+        /* Navbar */
+    
+        
+        .logo {
+            color: #fff;
+            font-size: 28px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        
+        .logo img {
+            width: 120px;
+            height: auto;
+            margin-right: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+      
+     
+        
+     
+      
+        /* Contenu principal */
+        main {
+            padding: 50px 15px;
+            background: rgba(255, 255, 255, 0.9); /* Fond légèrement transparent */
+            border-radius: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            margin-top: 50px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Section Hero */
+        .hero {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            padding: 120px 0;
+            border-radius: 0 0 20px 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .hero .btn {
+            margin-top: 20px;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            background-color: #ffdd57;
+            color: #333;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+
+        .hero .btn:hover {
+            background-color: #ffcc00;
+            color: #333;
+            transform: translateY(-3px);
+        }
+
+        /* Cartes de produits */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            background-color: #fff;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animation d'apparition des cartes */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Produits */
+        .product-section {
+            background: rgba(255, 255, 255, 0.9); /* Fond légèrement transparent */
+            padding: 40px 0;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .product-section h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2575fc;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .product-section h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #ffdd57;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Section Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            padding: 60px 0;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .newsletter p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .newsletter .btn {
+            background-color: #ffdd57;
+            color: #333;
+            font-weight: 600;
+            padding: 12px 35px;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+
+        .newsletter .btn:hover {
+            background-color: #ffcc00;
+            color: #333;
+            transform: translateY(-3px);
+        }
+
+        .logo-right {
+            width: 120px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .navbar {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .navbar-brand img {
+            width: 100px;
+            margin-right: 10px;
+        }
+        .nav-link {
+            color: white !important;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #ffdd57 !important;
+        }
+        .navbar-toggler {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barre de navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm sticky-top">
+        <div class="container">
+            <!-- Logo et Nom -->
+            <a href="{% url 'acceil' %}" class="navbar-brand d-flex align-items-center">
+                {% load static %}
+                <img src="{% static 'images/logo.webp' %}" alt="Logo Jawdaphone" class="logo me-2">
+                <span class="fw-bold text-primary">Jawdaphone</span>
+            </a>
+    
+            <!-- Bouton de navigation mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Liens de navigation -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="{% url 'acceil' %}" class="nav-link {% if request.path == '/' %}active{% endif %}">Produits</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'cherg' %}" class="nav-link {% if request.path == '/cherg/' %}active{% endif %}">Chargeurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'tel' %}" class="nav-link {% if request.path == '/tel/' %}active{% endif %}">Téléphones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'ecouteur' %}" class="nav-link {% if request.path == '/ecouteur/' %}active{% endif %}">Écouteurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'AjouterC' %}" class="nav-link {% if request.path == '/AjouterC/' %}active{% endif %}">Commandes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'contacter' %}" class="nav-link {% if request.path == '/contact/' %}active{% endif %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'prop' %}" class="nav-link {% if request.path == '/sinscrit/' %}active{% endif %}">À propos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Contenu dynamique -->
+    <main class="container">
+        {% block content %}
+        <!-- Contenu spécifique de chaque page sera ici -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Jawdaphone. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <!-- Script personnalisé -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
